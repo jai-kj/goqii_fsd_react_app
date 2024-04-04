@@ -40,14 +40,23 @@ export const useTextInput = ({
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setValue(e.target.value);
-      if (e.target.value === "") setError("");
-      else {
+      if (e.target.value === "") {
+        setError("");
+        if (handleOnChange) {
+          handleOnChange(e.target.value);
+        }
+      } else {
         if (e.target.value?.trim() === "") setError("true");
         else if (regexCheck && regex && regex.test(e.target.value)) {
           setError("false");
-          if (handleOnChange) handleOnChange(e.target.value?.trim());
-        } else if (regexCheck) setError("true");
-        else if (handleOnChange) handleOnChange(e.target.value?.trim());
+          if (handleOnChange) {
+            handleOnChange(e.target.value);
+          }
+        } else if (regexCheck) {
+          setError("true");
+        } else if (handleOnChange) {
+          handleOnChange(e.target.value);
+        }
       }
     },
     [regex, regexCheck, handleOnChange]
