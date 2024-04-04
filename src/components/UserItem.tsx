@@ -1,18 +1,11 @@
+import { format, formatDistanceStrict } from "date-fns";
+import { useMemo } from "react";
+import { IUser } from "../context/state";
 import Calender from "./icons/Calender";
 import Mail from "./icons/Mail";
 import Saved from "./icons/Saved";
 import User from "./icons/User";
 import UserItemAction from "./UserItemAction";
-
-interface IUser {
-  id: string;
-  name: string;
-  email: string;
-  dob: string;
-  created_at: string;
-  updated_at: string;
-}
-
 interface IUserItemProps {
   user: IUser;
   handleEditOpen: () => void;
@@ -24,35 +17,50 @@ const UserItem = ({
   handleEditOpen,
   handleDeleteOpen,
 }: IUserItemProps) => {
+  const formattedDOB = useMemo(
+    () => format(new Date(user.dob), "do MMM yyyy"),
+    [user.dob]
+  );
+
+  const formattedUpdatedAt = useMemo(
+    () =>
+      formatDistanceStrict(new Date(user.updated_at), new Date(), {
+        addSuffix: true,
+      }),
+    [user.updated_at]
+  );
+
   return (
-    <li className="w-full bg-slate-600 rounded-sm px-4 py-2 flex flex-col md:flex-row gap-2 relative group">
+    <li className="w-full bg-slate-600 rounded-sm px-2 py-2 flex flex-col lg:flex-row gap-2 relative group cursor-default">
       <div
-        className="flex items-center gap-3 w-full md:w-1/4"
+        className="flex items-center gap-3 w-full lg:w-3/12"
         title={user.name}
       >
         <User />
-        {user.name}
+        <span className="truncate">{user.name}</span>
       </div>
       <div
-        className="flex items-center gap-3 w-full md:w-1/4"
+        className="flex items-center gap-3 w-full lg:w-3/12"
         title={user.email}
       >
         <Mail />
-        {user.email}
+        <span className="truncate">{user.email}</span>
       </div>
       <div
-        className="flex items-center gap-3 w-full md:w-1/4"
+        className="flex items-center gap-3 w-full lg:w-2/12"
         title="Date of birth"
       >
         <Calender />
-        {user.dob}
+        <span className="truncate">{formattedDOB}</span>
       </div>
       <div
-        className="flex items-center gap-3 w-full md:w-1/4"
+        className="flex items-center gap-3 w-full lg:w-3/12"
         title="Updated at"
       >
         <Saved />
-        {user.updated_at}
+        <span className="truncate text-balance">
+          Last updated: {formattedUpdatedAt}
+        </span>
       </div>
       <UserItemAction
         id={user.id}

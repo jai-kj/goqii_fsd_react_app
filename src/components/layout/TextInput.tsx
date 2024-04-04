@@ -35,7 +35,10 @@ const TextInput = ({
           name={name}
           title={name}
           className={twMerge(
-            clsx("h-10 bg-transparent w-full px-2 outline-none", rest.className)
+            clsx(
+              "h-10 bg-transparent w-full px-2 outline-none disabled:bg-transparent disabled:cursor-not-allowed",
+              rest.className
+            )
           )}
           placeholder={placeholder}
           {...inputHook.bind}
