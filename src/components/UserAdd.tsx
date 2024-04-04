@@ -4,6 +4,7 @@ import Cross from "./icons/Cross";
 import Button from "./layout/Button";
 import TextInput from "./layout/TextInput";
 import PopUpWrapper from "./PopUpWrapper";
+import { useUIDispatch } from "../context/context";
 
 interface IUserAddProps {
   show: boolean;
@@ -11,6 +12,8 @@ interface IUserAddProps {
 }
 
 const UserAdd = ({ show, handleClose }: IUserAddProps) => {
+  const { setAlert, addNewUser } = useUIDispatch();
+
   const nameInputHook = useTextInput({
     regexCheck: true,
     regex: /^[a-zA-Z][a-zA-Z0-9 ]*$/,
@@ -36,6 +39,36 @@ const UserAdd = ({ show, handleClose }: IUserAddProps) => {
     dobInputHook.onUpdate();
   };
 
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const name = nameInputHook.value?.trim();
+    const email = emailInputHook.value?.trim();
+    const dob = dobInputHook.value?.trim();
+
+    if (
+      !name ||
+      nameInputHook.error === "true" ||
+      !email ||
+      emailInputHook.error === "true" ||
+      !dob ||
+      dobInputHook.error === "true"
+    )
+      return setAlert({
+        message:
+          "Please provide valid name, email and date of birth to add a user",
+      });
+
+    addNewUser({
+      name,
+      email,
+      dob,
+    });
+    handleReset();
+    handleClose();
+    return;
+  };
+
   return (
     <PopUpWrapper show={show} handleClose={handleClose}>
       <div className="flex items-center justify-center w-full relative pb-3">
@@ -47,7 +80,10 @@ const UserAdd = ({ show, handleClose }: IUserAddProps) => {
           <Cross />
         </Button>
       </div>
-      <form className="flex flex-col w-full h-full py-3 gap-y-6">
+      <form
+        className="flex flex-col w-full h-full py-3 gap-y-6"
+        onSubmit={handleFormSubmit}
+      >
         <TextInput
           name="name"
           autoComplete="name"
