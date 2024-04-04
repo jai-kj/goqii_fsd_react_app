@@ -19,7 +19,7 @@ const ModalProvider = forwardRef(
         <div
           ref={ref}
           className={`
-        fixed bg-slate-600 rounded-2xl px-4 py-5 top-1/2 left-1/2 
+        fixed bg-slate-600 rounded-2xl p-5 top-1/2 left-1/2 
         w-[calc(100%-3rem)] md:w-[36rem] overflow-y-auto no-scrollbar
         -translate-x-1/2 transition-all duration-300 ease-in-out scroll-smooth 
         ${
