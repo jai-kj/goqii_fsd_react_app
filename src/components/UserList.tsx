@@ -1,3 +1,6 @@
+import { useShow } from "../hooks/useShow";
+import UserDelete from "./UserDelete";
+import UserEdit from "./UserEdit";
 import UserItem from "./UserItem";
 
 const users = [
@@ -124,11 +127,31 @@ const users = [
 ];
 
 const UserList = () => {
+  const {
+    visible: editVisible,
+    handleOpen: handleEditOpen,
+    handleClose: handleEditClose,
+  } = useShow({ defaultState: false });
+
+  const {
+    visible: deleteVisible,
+    handleOpen: handleDeleteOpen,
+    handleClose: handleDeleteClose,
+  } = useShow({ defaultState: false });
+
   return (
     <div className="w-full h-full overflow-hidden">
+      <UserEdit show={editVisible} handleClose={handleEditClose} />
+      <UserDelete show={deleteVisible} handleClose={handleDeleteClose} />
+
       <ul className="w-full h-full overflow-y-scroll space-y-3 pr-2">
         {users.map((user) => (
-          <UserItem key={user.id} user={user} />
+          <UserItem
+            key={user.id}
+            user={user}
+            handleEditOpen={handleEditOpen}
+            handleDeleteOpen={handleDeleteOpen}
+          />
         ))}
       </ul>
     </div>

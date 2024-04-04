@@ -4,7 +4,7 @@ import Saved from "./icons/Saved";
 import User from "./icons/User";
 import UserItemAction from "./UserItemAction";
 
-interface IUserItemProps {
+interface IUser {
   id: string;
   name: string;
   email: string;
@@ -13,7 +13,17 @@ interface IUserItemProps {
   updated_at: string;
 }
 
-const UserItem = ({ user }: { user: IUserItemProps }) => {
+interface IUserItemProps {
+  user: IUser;
+  handleEditOpen: () => void;
+  handleDeleteOpen: () => void;
+}
+
+const UserItem = ({
+  user,
+  handleEditOpen,
+  handleDeleteOpen,
+}: IUserItemProps) => {
   return (
     <li className="w-full bg-slate-600 rounded-sm px-4 py-2 flex flex-col md:flex-row gap-2 relative group">
       <div
@@ -44,7 +54,11 @@ const UserItem = ({ user }: { user: IUserItemProps }) => {
         <Saved />
         {user.updated_at}
       </div>
-      <UserItemAction id={user.id} />
+      <UserItemAction
+        id={user.id}
+        handleEditOpen={handleEditOpen}
+        handleDeleteOpen={handleDeleteOpen}
+      />
     </li>
   );
 };
