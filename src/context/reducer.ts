@@ -30,6 +30,12 @@ export const reducer = (
   action: IAction
 ): IState => {
   switch (action.type) {
+    case ActionTypes.SET_ALERT:
+      return { ...state, alertMessage: action.payload };
+
+    case ActionTypes.RESET_ALERT:
+      return { ...state, alertMessage: "" };
+
     case ActionTypes.FETCH_USER_LIST:
       return { ...state, userList: action.payload };
 

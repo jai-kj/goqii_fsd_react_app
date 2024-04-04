@@ -17,6 +17,7 @@ const UserActions = (
         },
         isArray: true,
         isObject: false,
+        showAlert: false,
       }),
     [handleRequest]
   );

@@ -61,6 +61,7 @@ const CommonActions = (
     isObject?: boolean;
     objectProps?: T;
     isArray?: boolean;
+    showAlert?: boolean;
   }
 
   const handleRequest = useCallback(
@@ -70,6 +71,7 @@ const CommonActions = (
       isObject = true,
       objectProps,
       isArray = false,
+      showAlert = true,
     }: IHandleRequestParams<T>) => {
       if (!isObject && !isArray) {
         return;
@@ -84,9 +86,8 @@ const CommonActions = (
         const { data, message } = response.data;
 
         result.data = data;
-        setAlert(message);
-        if (params.method === "DELETE") {
-          return;
+        if (showAlert) {
+          setAlert({ message });
         }
 
         dispatch({ type, payload: result });

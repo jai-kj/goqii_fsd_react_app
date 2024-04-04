@@ -24,3 +24,44 @@ body {
   background-color: darkgrey;
   outline: 1px solid slategrey;
 }
+
+.alert {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transition: all 0.3s ease-in-out;
+  perspective: 1000;
+}
+
+.alert-hide {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  transform: translate(-50%, 100%);
+  transition-delay: 0.3s;
+}
+
+.alert-show {
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.3s ease-in-out;
+  transform: translate(-50%, -2rem);
+  transition-delay: 0.3s;
+}
+
+/* Text fade in animation */
+.animate-fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 1s; /* Adjust as needed */
+  animation-delay: 0.35s; /* Delay of 0.3s */
+  animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
