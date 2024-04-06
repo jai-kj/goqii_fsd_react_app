@@ -8,7 +8,7 @@ import {
   IDefaultObjectState,
 } from "../state";
 
-axios.defaults.baseURL = "http://localhost:8000";
+axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL;
 
 const CommonActions = (
   dispatch: React.Dispatch<{ type: string; payload?: unknown }>
